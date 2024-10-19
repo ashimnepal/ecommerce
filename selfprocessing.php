@@ -197,7 +197,61 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($_GET['id'])) {
                 <button type="submit" class="btn btn-success">Login</button>
             </form>
 
-        
+        <?php else: ?>
+
+            <!-- Product Management Section -->
+            <div class="mb-4">
+                <a href="?action=logout" class="btn btn-danger">Logout</a>
+            </div>
+
+            <!-- Add/Edit Product Form -->
+            <form action="" method="POST" class="mb-4">
+                <input type="hidden" name="action" value="<?php echo $product_to_edit ? 'edit' : 'add'; ?>">
+                <?php if ($product_to_edit): ?>
+                    <input type="hidden" name="id" value="<?php echo $product_to_edit['id']; ?>">
+                <?php endif; ?>
+                <h3><?php echo $product_to_edit ? 'Edit' : 'Add'; ?> Product</h3>
+                <div class="mb-3">
+                    <label for="product_name" class="form-label">Product Name</label>
+                    <input type="text" id="product_name" name="product_name" class="form-control" value="<?php echo $product_to_edit['product_name'] ?? ''; ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" id="price" name="price" step="0.01" class="form-control" value="<?php echo $product_to_edit['price'] ?? ''; ?>" required>
+                </div>
+                <button type="submit" class="btn btn-primary"><?php echo $product_to_edit ? 'Update' : 'Add'; ?> Product</button>
+            </form>
+
+            <!-- Product List -->
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = $products->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['product_name']; ?></td>
+                            <td><?php echo $row['price']; ?></td>
+                            <td>
+                                <a href="?action=edit&id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="" method="POST" style="display:inline;">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+
+        <?php endif; ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
