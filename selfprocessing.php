@@ -151,3 +151,60 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($_GET['id'])) {
 
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Product Management</h1>
+
+        <!-- Authentication Section -->
+        <?php if (!isset($_SESSION['user_id'])): ?>
+            <div class="alert alert-info"><?php echo $message; ?></div>
+
+            <!-- Sign-up Form -->
+            <form action="" method="POST" class="mb-4">
+                <input type="hidden" name="action" value="signup">
+                <h3>Sign-up</h3>
+                <div class="mb-3">
+                    <label for="signup_username" class="form-label">Username</label>
+                    <input type="text" id="signup_username" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="signup_password" class="form-label">Password</label>
+                    <input type="password" id="signup_password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </form>
+
+            <!-- Login Form -->
+            <form action="" method="POST">
+                <input type="hidden" name="action" value="login">
+                <h3>Login</h3>
+                <div class="mb-3">
+                    <label for="login_username" class="form-label">Username</label>
+                    <input type="text" id="login_username" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="login_password" class="form-label">Password</label>
+                    <input type="password" id="login_password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success">Login</button>
+            </form>
+
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<?php
+// Close database connection
+$db->close();
+?>
